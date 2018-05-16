@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OBD2</string>
+    <string name="livedaten_anzeigen">Livedaten anzeigen</string>
+    <string name="fehlercodes_anzeigen">Fehlercodes anzeigen</string>
+    <string name="title_activity_livedaten_tabs">LivedatenTabs</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="update">Update</string>
+    <string name="delete_all">Delete All</string>
+    <string name="title_activity_einstellungen">Einstellungen</string>
+    <string name="preference_mqtt_ipaddress_default">tcp://m23.cloudmqtt.com:19114</string>
+    <string name="preference_mqtt_ipaddress_key">mqtt_ipaddress</string>
+    <string name="preference_mqtt_ipaddress">IP-Adresse</string>
+    <string name="preference_mqtt_user">Username</string>
+    <string name="preference_mqtt_pass">Passwort</string>
+    <string name="preference_mqtt_user_key">mqtt_user</string>
+    <string name="preference_mqtt_pass_key">mqtt_pass</string>
+    <string name="preference_mqtt_user_default">tiqhoouh</string>
+    <string name="preference_mqtt_pass_default">9hhO2nOCJoGp</string>
+</resources>

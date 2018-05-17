@@ -2,6 +2,7 @@ package de.dhbw.obdzweidashboard.obd2_application;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -19,24 +20,25 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 
 public class MqttHelperLivedaten {
-    public MqttAndroidClient mqttAndroidClient;
-    Activity activity;
-
-    public String serverUri = "tcp://m23.cloudmqtt.com:19114";
-    /*SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
-    String prefIpAddressKey = activity.getString(R.string.preference_mqtt_ipaddress_key);
-    String prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
-    String ipadress = sPrefs.getString(prefIpAddressKey,prefIpAddressDefault);
-    public String serverUri = ipadress;*/
-
     final String clientId = "OBD2AndroidAppLivedaten";
     final String subscriptionTopic = "Live";
+    public MqttAndroidClient mqttAndroidClient;
+    public String serverUri;
+    //public String serverUri = "tcp://m23.cloudmqtt.com:19114";
+    SharedPreferences sPrefs;
+    String prefIpAddressKey;
+    String prefIpAddressDefault;
+    String ipadress;
 
-    public String username = "tiqhoouh";
-    public String password = "9hhO2nOCJoGp";
+    //public String username = "tiqhoouh";
+    //public String password = "9hhO2nOCJoGp";
 
-    public MqttHelperLivedaten(Context context, Activity activity){
-        this.activity=activity;
+    public MqttHelperLivedaten(Context context, SharedPreferences sprefs, Activity activity) {
+        SharedPreferences sPrefs = sprefs;
+        prefIpAddressKey = activity.getString(R.string.preference_mqtt_ipaddress_key);
+        prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
+        ipadress = sPrefs.getString(prefIpAddressKey, prefIpAddressDefault);
+        serverUri = ipadress;
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override
@@ -70,8 +72,8 @@ public class MqttHelperLivedaten {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
-        mqttConnectOptions.setUserName(username);
-        mqttConnectOptions.setPassword(password.toCharArray());
+        //mqttConnectOptions.setUserName(username);
+        //mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
 

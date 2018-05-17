@@ -1,6 +1,8 @@
 package de.dhbw.obdzweidashboard.obd2_application;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -18,17 +20,24 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 
 public class MqttHelperFehlercodes {
-    public MqttAndroidClient mqttAndroidClient;
-
-    public String serverUri = "tcp://m23.cloudmqtt.com:19114";
-
     final String clientId = "OBD2AndroidAppFehlercodes";
     final String subscriptionTopic = "Fehler";
-
+    public MqttAndroidClient mqttAndroidClient;
+    public String serverUri;
     public String username = "tiqhoouh";
     public String password = "9hhO2nOCJoGp";
+    SharedPreferences sPrefs;
+    String prefIpAddressKey;
+    String prefIpAddressDefault;
+    String ipadress;
 
-    public MqttHelperFehlercodes(Context context){
+    public MqttHelperFehlercodes(Context context, SharedPreferences sprefs, Activity activity) {
+        SharedPreferences sPrefs = sprefs;
+        prefIpAddressKey = activity.getString(R.string.preference_mqtt_ipaddress_key);
+        prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
+        ipadress = sPrefs.getString(prefIpAddressKey, prefIpAddressDefault);
+        serverUri = ipadress;
+        //serverUri = "tcp://10.3.141.1:1883";
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override

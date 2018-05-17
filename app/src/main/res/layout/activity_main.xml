@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="de.dhbw.obdzweidashboard.obd2_application.MainActivity">
 
+
     <Button
         android:id="@+id/button_livedaten_anzeigen"
         android:layout_width="322dp"

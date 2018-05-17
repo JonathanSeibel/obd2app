@@ -2,8 +2,10 @@ package de.dhbw.obdzweidashboard.obd2_application;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,17 +17,18 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LivedatenTabsActivity extends AppCompatActivity {
     private static final String TAG = "LivedatenTabsActivity";
-    private ViewPager mViewPager;
     TabPaceFragment tabPaceFragmentObj;
     TabRPMFragment tabRPMFragmentObj;
     TabOilTempFragment tabOilTempFragmentObj;
@@ -41,10 +44,11 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     TextView wertText4;
     TextView wertText5;
     TextView wertText6;
-    private AsyncTask backgroundThread;
     MqttHelperLivedaten mqttHelperLivedaten;
-    String[] ergebnis = new String[6];
+    String[] ergebnis = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
     boolean connected = false;
+    private ViewPager mViewPager;
+    private AsyncTask backgroundThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
-
+        aktualisiere(ergebnis);
         startMqtt(this);
     }
 
@@ -97,9 +101,9 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         tabCoolwaterTempFragmentObj.setSpeed(daten[3]);
         tabDTCCountFragmentObj.setSpeed(daten[4]);
         tabThrottlePositionFragmentObj.setSpeed(daten[5]);
-        tabFuelLevelFragmentObj.setSpeed("asdf");
-        tabFuelRateFragmentObj.setSpeed("sdf");
-        tabLadeDruckFragmentObj.setSpeed("aöldkfj");
+        tabFuelLevelFragmentObj.setSpeed(daten[6]);
+        tabFuelRateFragmentObj.setSpeed(daten[7]);
+        tabLadeDruckFragmentObj.setSpeed(daten[8]);
     }
 
     @Override
@@ -122,16 +126,46 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        //Einstellungen abfragen
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String prefPaceKey = getString(R.string.preference_pace_key);
+        Boolean pace = sPrefs.getBoolean(prefPaceKey, true);
+
+        String prefRPMKey = getString(R.string.preference_rpm_key);
+        Boolean rpm = sPrefs.getBoolean(prefRPMKey, true);
+
+        String prefOilTempKey = getString(R.string.preference_oiltemp_key);
+        Boolean oilTemp = sPrefs.getBoolean(prefOilTempKey, true);
+
+        String prefCoolwaterTempKey = getString(R.string.preference_coolwatertemp_key);
+        Boolean coolwaterTemp = sPrefs.getBoolean(prefCoolwaterTempKey, true);
+
+        String prefDTCCountKey = getString(R.string.preference_dtccount_key);
+        Boolean dtcCount = sPrefs.getBoolean(prefDTCCountKey, true);
+
+        String prefFuelLevelKey = getString(R.string.preference_fuellevel_key);
+        Boolean fuelLevel = sPrefs.getBoolean(prefFuelLevelKey, true);
+
+        String prefFuelRateKey = getString(R.string.preference_fuelrate_key);
+        Boolean fuelRate = sPrefs.getBoolean(prefFuelRateKey, true);
+
+        String prefLadedruckKey = getString(R.string.preference_ladedruck_key);
+        Boolean ladedruck = sPrefs.getBoolean(prefLadedruckKey, true);
+
+        String prefThrottlePosKey = getString(R.string.preference_throttlepos_key);
+        Boolean throttlePos = sPrefs.getBoolean(prefThrottlePosKey, true);
+        //
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(tabPaceFragmentObj, "TABPace", 0);
-        adapter.addFragment(tabRPMFragmentObj, "TABRPM", 1);
-        adapter.addFragment(tabOilTempFragmentObj, "TABOilTemp", 2);
-        adapter.addFragment(tabCoolwaterTempFragmentObj, "TABCoolwaterTemp", 3);
-        adapter.addFragment(tabDTCCountFragmentObj, "TABDTCCount", 4);
-        adapter.addFragment(tabThrottlePositionFragmentObj, "TABThrottlePosition", 5);
-        adapter.addFragment(tabFuelLevelFragmentObj, "TABFuelLevel", 6);
-        adapter.addFragment(tabFuelRateFragmentObj, "TABFuelRate", 7);
-        adapter.addFragment(tabLadeDruckFragmentObj, "TABLadeDruck", 8);
+        if (pace) adapter.addFragment(tabPaceFragmentObj, "TABPace");
+        if (rpm) adapter.addFragment(tabRPMFragmentObj, "TABRPM");
+        if (oilTemp) adapter.addFragment(tabOilTempFragmentObj, "TABOilTemp");
+        if (coolwaterTemp) adapter.addFragment(tabCoolwaterTempFragmentObj, "TABCoolwaterTemp");
+        if (dtcCount) adapter.addFragment(tabDTCCountFragmentObj, "TABDTCCount");
+        if (fuelLevel) adapter.addFragment(tabFuelLevelFragmentObj, "TABFuelLevel");
+        if (fuelRate) adapter.addFragment(tabFuelRateFragmentObj, "TABFuelRate");
+        if (ladedruck) adapter.addFragment(tabLadeDruckFragmentObj, "TABLadeDruck");
+        if (throttlePos) adapter.addFragment(tabThrottlePositionFragmentObj, "TABThrottlePosition");
         viewPager.setAdapter(adapter);
     }
 
@@ -161,28 +195,41 @@ public class LivedatenTabsActivity extends AppCompatActivity {
 
 
     private void startMqtt(final Activity activity) {
-        mqttHelperLivedaten = new MqttHelperLivedaten(getApplicationContext(), this);
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        mqttHelperLivedaten = new MqttHelperLivedaten(getApplicationContext(), sPrefs, activity);
         mqttHelperLivedaten.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                Toast.makeText(activity, "Connected to PI!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Connection to Pi established...", Toast.LENGTH_SHORT).show();
+                MqttMessage m = new MqttMessage("sofort".getBytes());
+                try {
+                    mqttHelperLivedaten.mqttAndroidClient.publish("Live", m);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void connectionLost(Throwable throwable) {
-
+                Toast.makeText(activity, "Connection to Pi lost...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                JSONObject jsnonO = new JSONObject();
-//                jsnonO = JSONObject.(JSONObject)mqttMessage.toString();
-                ergebnis[0] = mqttMessage.toString();
-                ergebnis[1] = mqttMessage.toString();
-                ergebnis[2] = mqttMessage.toString();
-                ergebnis[3] = mqttMessage.toString();
-                ergebnis[4] = mqttMessage.toString();
-                ergebnis[5] = mqttMessage.toString();
+                String gsonString = mqttMessage.toString();
+                Gson gson = new Gson();
+                LiveData data = gson.fromJson(gsonString, LiveData.class);
+
+                if (data.type.equals("kmh")) ergebnis[0] = data.datavalue;
+                if (data.type.equals("rpm")) ergebnis[1] = data.datavalue;
+                if (data.type.equals("oiltemp")) ergebnis[2] = data.datavalue;
+                if (data.type.equals("coolwatertemp")) ergebnis[3] = data.datavalue;
+                if (data.type.equals("dtccount")) ergebnis[4] = data.datavalue;
+                if (data.type.equals("fuellevel")) ergebnis[5] = data.datavalue;
+                if (data.type.equals("fuelrate")) ergebnis[6] = data.datavalue;
+                if (data.type.equals("ladedruck")) ergebnis[7] = data.datavalue;
+                if (data.type.equals("throttlepos")) ergebnis[8] = data.datavalue;
+
                 aktualisiere(ergebnis);
             }
 
@@ -195,20 +242,21 @@ public class LivedatenTabsActivity extends AppCompatActivity {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public void addFragment(Fragment fragment, String title, int position){
-            mFragmentList.add(position, fragment);
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
         @Override
         public Fragment getItem(int position) {
-           return mFragmentList.get(position);
+            return mFragmentList.get(position);
         }
 
         @Override
@@ -220,5 +268,12 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         public int getCount() {
             return mFragmentList.size();
         }
+    }
+
+    public class LiveData {
+
+        public String datavalue;
+        public String type;
+
     }
 }

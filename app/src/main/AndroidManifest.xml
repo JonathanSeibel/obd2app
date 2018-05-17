@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="de.dhbw.obdzweidashboard.obd2_application">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -35,7 +34,8 @@
         <activity
             android:name=".EinstellungenActivity"
             android:label="@string/title_activity_einstellungen"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".LivedatenTabsActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.dhbw.obdzweidashboard.obd2_application.MainActivity" />

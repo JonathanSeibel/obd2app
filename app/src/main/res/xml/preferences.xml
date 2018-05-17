@@ -2,21 +2,62 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:title="@string/preference_mqtt_ipaddress"
-        android:key="@string/preference_mqtt_ipaddress_key"
         android:defaultValue="@string/preference_mqtt_ipaddress_default"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:key="@string/preference_mqtt_ipaddress_key"
+        android:title="@string/preference_mqtt_ipaddress" />
 
     <EditTextPreference
-        android:title="@string/preference_mqtt_user"
-        android:key="@string/preference_mqtt_user_key"
         android:defaultValue="@string/preference_mqtt_user_default"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:key="@string/preference_mqtt_user_key"
+        android:title="@string/preference_mqtt_user" />
 
     <EditTextPreference
-        android:title="@string/preference_mqtt_pass"
-        android:key="@string/preference_mqtt_pass_key"
         android:defaultValue="@string/preference_mqtt_pass_default"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:key="@string/preference_mqtt_pass_key"
+        android:title="@string/preference_mqtt_pass" />
+
+
+    <PreferenceCategory>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_pace_key"
+            android:title="@string/preference_pace_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_rpm_key"
+            android:title="@string/preference_rpm_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_oiltemp_key"
+            android:title="@string/preference_oiltemp_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_coolwatertemp_key"
+            android:title="@string/preference_coolwatertemp_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_dtccount_key"
+            android:title="@string/preference_dtccount_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_fuellevel_key"
+            android:title="@string/preference_fuellevel_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_fuelrate_key"
+            android:title="@string/preference_fuelrate_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_ladedruck_key"
+            android:title="@string/preference_ladedruck_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/preference_throttlepos_key"
+            android:title="@string/preference_throttlepos_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

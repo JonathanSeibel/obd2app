@@ -8,7 +8,7 @@
     <string name="update">Update</string>
     <string name="delete_all">Delete All</string>
     <string name="title_activity_einstellungen">Einstellungen</string>
-    <string name="preference_mqtt_ipaddress_default">tcp://m23.cloudmqtt.com:19114</string>
+    <string name="preference_mqtt_ipaddress_default">tcp://10.3.141.1:1883</string>
     <string name="preference_mqtt_ipaddress_key">mqtt_ipaddress</string>
     <string name="preference_mqtt_ipaddress">IP-Adresse</string>
     <string name="preference_mqtt_user">Username</string>
@@ -17,4 +17,25 @@
     <string name="preference_mqtt_pass_key">mqtt_pass</string>
     <string name="preference_mqtt_user_default">tiqhoouh</string>
     <string name="preference_mqtt_pass_default">9hhO2nOCJoGp</string>
+
+    <string name="preference_pace_title">Geschwindigkeit</string>
+    <string name="preference_rpm_title">Motordrehzahl</string>
+    <string name="preference_oiltemp_title">Öltemperatur</string>
+    <string name="preference_coolwatertemp_title">Kühlwassertemperatur</string>
+    <string name="preference_dtccount_title">Anzahl der DTCs</string>
+    <string name="preference_fuellevel_title">Kraftstoffstand</string>
+    <string name="preference_fuelrate_title">Kraftstoffverbrauch</string>
+    <string name="preference_ladedruck_title">Ladedruck</string>
+    <string name="preference_throttlepos_title">Throttle-Position</string>
+
+    <string name="preference_pace_key">setting_check_pace</string>
+    <string name="preference_rpm_key">setting_check_rpm</string>
+    <string name="preference_oiltemp_key">setting_check_oiltemp</string>
+    <string name="preference_coolwatertemp_key">setting_check_coolwatertemp</string>
+    <string name="preference_dtccount_key">setting_check_dtccount</string>
+    <string name="preference_fuellevel_key">setting_check_fuellevel</string>
+    <string name="preference_fuelrate_key">setting_check_fuelrate</string>
+    <string name="preference_ladedruck_key">setting_check_ladedruck</string>
+    <string name="preference_throttlepos_key">setting_check_throttlepos</string>
+    <string name="pref_category_title">Livedaten Anzeigeoptionen</string>
 </resources>

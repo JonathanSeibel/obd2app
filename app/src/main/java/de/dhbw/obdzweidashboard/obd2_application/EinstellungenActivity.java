@@ -20,10 +20,10 @@ public class EinstellungenActivity extends PreferenceActivity
         addPreferencesFromResource(R.xml.preferences);
         Preference ipaddressPref = findPreference(getString(R.string.preference_mqtt_ipaddress_key));
         ipaddressPref.setOnPreferenceChangeListener(this);
-        Preference userPref = findPreference(getString(R.string.preference_mqtt_user_key));
+/*        Preference userPref = findPreference(getString(R.string.preference_mqtt_user_key));
         userPref.setOnPreferenceChangeListener(this);
         Preference passPref = findPreference(getString(R.string.preference_mqtt_pass_key));
-        passPref.setOnPreferenceChangeListener(this);
+        passPref.setOnPreferenceChangeListener(this);*/
 
         Preference pacePref = findPreference(getString(R.string.preference_pace_key));
         pacePref.setOnPreferenceChangeListener(this);

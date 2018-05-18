@@ -24,8 +24,8 @@ public class MqttHelperFehlercodes {
     final String subscriptionTopic = "Fehler";
     public MqttAndroidClient mqttAndroidClient;
     public String serverUri;
-    public String username = "tiqhoouh";
-    public String password = "9hhO2nOCJoGp";
+    //public String username = "tiqhoouh";
+    //public String password = "9hhO2nOCJoGp";
     SharedPreferences sPrefs;
     String prefIpAddressKey;
     String prefIpAddressDefault;
@@ -72,8 +72,8 @@ public class MqttHelperFehlercodes {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
-        mqttConnectOptions.setUserName(username);
-        mqttConnectOptions.setPassword(password.toCharArray());
+        //mqttConnectOptions.setUserName(username);
+        //mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
 

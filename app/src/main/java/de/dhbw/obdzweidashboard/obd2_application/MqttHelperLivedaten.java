@@ -20,12 +20,16 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 
 public class MqttHelperLivedaten {
-    final String clientId = "OBD2AndroidAppLivedaten";
     final String subscriptionTopic = "Live";
     public MqttAndroidClient mqttAndroidClient;
     public String serverUri;
-    public String username = "tiqhoouh";
-    public String password = "9hhO2nOCJoGp";
+    //    WifiManager manager = (WifiManager) getSystemSercive(Context.WIFI_SERVICE):
+//    WifiInfo info = manager.getConnectionInfo();
+//    String address = info.getMacAddress();
+    String asdf = Integer.toString((int) (Math.random() * 10000));
+    public final String clientId = "OBD2AndroidAppLivedaten" + asdf;
+    //public String username = "tiqhoouh";
+    //public String password = "9hhO2nOCJoGp";
     //public String serverUri = "tcp://m23.cloudmqtt.com:19114";
     SharedPreferences sPrefs;
     String prefIpAddressKey;
@@ -33,6 +37,7 @@ public class MqttHelperLivedaten {
     String ipadress;
 
     public MqttHelperLivedaten(Context context, SharedPreferences sprefs, Activity activity) {
+        Log.i("ojahaaaaaaaaaaaaaaaaa", clientId);
         SharedPreferences sPrefs = sprefs;
         prefIpAddressKey = activity.getString(R.string.preference_mqtt_ipaddress_key);
         prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
@@ -72,8 +77,8 @@ public class MqttHelperLivedaten {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
-        mqttConnectOptions.setUserName(username);
-        mqttConnectOptions.setPassword(password.toCharArray());
+        //mqttConnectOptions.setUserName(username);
+        //mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
 

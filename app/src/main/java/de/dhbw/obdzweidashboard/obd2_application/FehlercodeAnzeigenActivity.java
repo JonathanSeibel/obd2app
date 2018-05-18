@@ -19,6 +19,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by JZX8NT on 23.02.2018.
@@ -64,19 +65,30 @@ public class FehlercodeAnzeigenActivity extends Activity {
             public void onClick(View v) {
                 //do something
                 adapter.list.clear();
-
+                loeschanfrage();
                 //Anstoßen, dass fehler auch in OBD gelöscht wird #MQTT #TODO
                 adapter.notifyDataSetChanged();
             }
         });
     }
+
+    private void loeschanfrage() {
+        MqttMessage m = new MqttMessage("jomachma".getBytes());
+        try {
+            mqttHelperFehlercodes.mqttAndroidClient.publish("bitteAlleFehlerLoeschen", m);
+            Toast.makeText(this, "Alle Fehler werden gelöscht, bitte warten...", Toast.LENGTH_SHORT).show();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void refresh(){
         int n = 0;
         list.clear();
         MqttMessage m = new MqttMessage("dankeschön".getBytes());
         try {
             mqttHelperFehlercodes.mqttAndroidClient.publish("bitteFehler", m);
-            Toast.makeText(this, "gesendet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fehlerabfrage wurde wahrscheinlich gesendet...", Toast.LENGTH_SHORT).show();
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -114,9 +126,13 @@ public class FehlercodeAnzeigenActivity extends Activity {
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
                 String gsonString = mqttMessage.toString();
                 Gson gson = new Gson();
-                //               Fehlerklasse data = gson.fromJson(gsonString, Fehlerklasse.class);
-                //               fehlercodeArray = new String[data.anzahlFehler];
-                //               fehlercodeArray = Arrays.copyOf(data.fehlerArray,data.anzahlFehler);
+                Fehlerklasse data = gson.fromJson(gsonString, Fehlerklasse.class);
+                if (data.anzahlFehler == 0) {
+                    Toast.makeText(activity, "Keine Fehlercodes vorhanden!!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    fehlercodeArray = new String[data.anzahlFehler];
+                    fehlercodeArray = Arrays.copyOf(data.fehlerArray, data.anzahlFehler);
+                }
             }
 
             @Override

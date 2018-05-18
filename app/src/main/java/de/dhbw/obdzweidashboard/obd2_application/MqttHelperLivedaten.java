@@ -24,14 +24,13 @@ public class MqttHelperLivedaten {
     final String subscriptionTopic = "Live";
     public MqttAndroidClient mqttAndroidClient;
     public String serverUri;
+    public String username = "tiqhoouh";
+    public String password = "9hhO2nOCJoGp";
     //public String serverUri = "tcp://m23.cloudmqtt.com:19114";
     SharedPreferences sPrefs;
     String prefIpAddressKey;
     String prefIpAddressDefault;
     String ipadress;
-
-    //public String username = "tiqhoouh";
-    //public String password = "9hhO2nOCJoGp";
 
     public MqttHelperLivedaten(Context context, SharedPreferences sprefs, Activity activity) {
         SharedPreferences sPrefs = sprefs;
@@ -39,6 +38,7 @@ public class MqttHelperLivedaten {
         prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
         ipadress = sPrefs.getString(prefIpAddressKey, prefIpAddressDefault);
         serverUri = ipadress;
+        //serverUri = "tcp://m23.cloudmqtt.com:19114";
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override
@@ -72,8 +72,8 @@ public class MqttHelperLivedaten {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
-        //mqttConnectOptions.setUserName(username);
-        //mqttConnectOptions.setPassword(password.toCharArray());
+        mqttConnectOptions.setUserName(username);
+        mqttConnectOptions.setPassword(password.toCharArray());
 
         try {
 
@@ -102,6 +102,15 @@ public class MqttHelperLivedaten {
         }
     }
 
+    public void disconnect() {
+        if (mqttAndroidClient.isConnected()) try {
+            mqttAndroidClient.unsubscribe(subscriptionTopic);
+            mqttAndroidClient.disconnect();
+            //mqttAndroidClient.close();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void subscribeToTopic() {
         try {

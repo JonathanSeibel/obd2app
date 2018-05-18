@@ -37,7 +37,7 @@ public class MqttHelperFehlercodes {
         prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
         ipadress = sPrefs.getString(prefIpAddressKey, prefIpAddressDefault);
         serverUri = ipadress;
-        //serverUri = "tcp://10.3.141.1:1883";
+        //serverUri = "tcp://m23.cloudmqtt.com:19114";
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
         mqttAndroidClient.setCallback(new MqttCallbackExtended() {
             @Override
@@ -47,6 +47,7 @@ public class MqttHelperFehlercodes {
 
             @Override
             public void connectionLost(Throwable throwable) {
+
 
             }
 
@@ -67,7 +68,7 @@ public class MqttHelperFehlercodes {
         mqttAndroidClient.setCallback(callback);
     }
 
-    private void connect(){
+    public void connect() {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setAutomaticReconnect(true);
         mqttConnectOptions.setCleanSession(false);
@@ -101,6 +102,15 @@ public class MqttHelperFehlercodes {
         }
     }
 
+    public void disconnect() {
+        if (mqttAndroidClient.isConnected()) try {
+            mqttAndroidClient.unsubscribe(subscriptionTopic);
+            mqttAndroidClient.disconnect();
+            //mqttAndroidClient.close();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void subscribeToTopic() {
         try {

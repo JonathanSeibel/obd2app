@@ -81,48 +81,36 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     public void aktualisiere(String[] daten) {
         //WENN neue Nachricht mit aktuellen Daten kam ->
 
-//        Tab1Fragment tab1 = (Tab1Fragment) Tab1FragmentObj;
-//        Tab2Fragment tab2 = (Tab2Fragment) Tab2FragmentObj;
-//        Tab3Fragment tab3 = (Tab3Fragment) Tab3FragmentObj;
-//        Tab4Fragment tab4 = (Tab4Fragment) Tab4FragmentObj;
-//        Tab5Fragment tab5 = (Tab5Fragment) Tab5FragmentObj;
-//        Tab6Fragment tab6 = (Tab6Fragment) Tab6FragmentObj;
-//
-//        tab1.setSpeed(daten[0]);
-//        tab2.setSpeed(daten[1]);
-//        tab3.setSpeed(daten[2]);
-//        tab4.setSpeed(daten[3]);
-//        tab5.setSpeed(daten[4]);
-//        tab6.setSpeed(daten[5]);
-
         tabPaceFragmentObj.setSpeed(daten[0]);
         tabRPMFragmentObj.setSpeed(daten[1]);
         tabOilTempFragmentObj.setSpeed(daten[2]);
         tabCoolwaterTempFragmentObj.setSpeed(daten[3]);
         tabDTCCountFragmentObj.setSpeed(daten[4]);
-        tabThrottlePositionFragmentObj.setSpeed(daten[5]);
-        tabFuelLevelFragmentObj.setSpeed(daten[6]);
-        tabFuelRateFragmentObj.setSpeed(daten[7]);
-        tabLadeDruckFragmentObj.setSpeed(daten[8]);
+        tabFuelLevelFragmentObj.setSpeed(daten[5]);
+        tabFuelRateFragmentObj.setSpeed(daten[6]);
+        tabLadeDruckFragmentObj.setSpeed(daten[7]);
+        tabThrottlePositionFragmentObj.setSpeed(daten[8]);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-//        backgroundThread.cancel(true);
+        if (mqttHelperLivedaten.mqttAndroidClient.isConnected()) try {
+            mqttHelperLivedaten.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        backgroundThread.cancel(true);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-//        backgroundThread = new VerbindungZuPiRunnable(this).execute("");
+        //startMqtt(this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -200,10 +188,10 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         mqttHelperLivedaten.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                Toast.makeText(activity, "Connection to Pi established...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Connection to Pi-Livedaten established...", Toast.LENGTH_SHORT).show();
                 MqttMessage m = new MqttMessage("sofort".getBytes());
                 try {
-                    mqttHelperLivedaten.mqttAndroidClient.publish("Live", m);
+                    mqttHelperLivedaten.mqttAndroidClient.publish("Livedatenstarten", m);
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
@@ -211,7 +199,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
 
             @Override
             public void connectionLost(Throwable throwable) {
-                Toast.makeText(activity, "Connection to Pi lost...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Connection to Pi-Livedaten lost...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -219,16 +207,19 @@ public class LivedatenTabsActivity extends AppCompatActivity {
                 String gsonString = mqttMessage.toString();
                 Gson gson = new Gson();
                 LiveData data = gson.fromJson(gsonString, LiveData.class);
-
-                if (data.type.equals("kmh")) ergebnis[0] = data.datavalue;
-                if (data.type.equals("rpm")) ergebnis[1] = data.datavalue;
-                if (data.type.equals("oiltemp")) ergebnis[2] = data.datavalue;
-                if (data.type.equals("coolwatertemp")) ergebnis[3] = data.datavalue;
-                if (data.type.equals("dtccount")) ergebnis[4] = data.datavalue;
-                if (data.type.equals("fuellevel")) ergebnis[5] = data.datavalue;
-                if (data.type.equals("fuelrate")) ergebnis[6] = data.datavalue;
-                if (data.type.equals("ladedruck")) ergebnis[7] = data.datavalue;
-                if (data.type.equals("throttlepos")) ergebnis[8] = data.datavalue;
+                if (data.datavalue.equals("")) {
+                    Toast.makeText(activity, "asdfasdf", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (data.type.equals("kmh")) ergebnis[0] = data.datavalue;
+                    if (data.type.equals("rpm")) ergebnis[1] = data.datavalue;
+                    if (data.type.equals("oiltemp")) ergebnis[2] = data.datavalue;
+                    if (data.type.equals("coolwatertemp")) ergebnis[3] = data.datavalue;
+                    if (data.type.equals("dtccount")) ergebnis[4] = data.datavalue;
+                    if (data.type.equals("fuellevel")) ergebnis[5] = data.datavalue;
+                    if (data.type.equals("fuelrate")) ergebnis[6] = data.datavalue;
+                    if (data.type.equals("ladedruck")) ergebnis[7] = data.datavalue;
+                    if (data.type.equals("throttlepos")) ergebnis[8] = data.datavalue;
+                }
 
                 aktualisiere(ergebnis);
             }

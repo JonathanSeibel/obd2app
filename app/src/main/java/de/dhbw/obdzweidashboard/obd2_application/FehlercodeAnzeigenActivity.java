@@ -73,9 +73,9 @@ public class FehlercodeAnzeigenActivity extends Activity {
     }
 
     private void loeschanfrage() {
-        MqttMessage m = new MqttMessage("jomachma".getBytes());
+        MqttMessage m = new MqttMessage("Delete".getBytes());
         try {
-            mqttHelperFehlercodes.mqttAndroidClient.publish("bitteAlleFehlerLoeschen", m);
+            mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
             Toast.makeText(this, "Alle Fehler werden gelöscht, bitte warten...", Toast.LENGTH_SHORT).show();
         } catch (MqttException e) {
             e.printStackTrace();
@@ -85,9 +85,9 @@ public class FehlercodeAnzeigenActivity extends Activity {
     private void refresh(){
         int n = 0;
         list.clear();
-        MqttMessage m = new MqttMessage("dankeschön".getBytes());
+        MqttMessage m = new MqttMessage("Error".getBytes());
         try {
-            mqttHelperFehlercodes.mqttAndroidClient.publish("bitteFehler", m);
+            mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
             Toast.makeText(this, "Fehlerabfrage wurde wahrscheinlich gesendet...", Toast.LENGTH_SHORT).show();
         } catch (MqttException e) {
             e.printStackTrace();
@@ -109,9 +109,9 @@ public class FehlercodeAnzeigenActivity extends Activity {
             public void connectComplete(boolean b, String s) {
                 Toast.makeText(activity, "Connection to Pi-Fehlercodes established...", Toast.LENGTH_SHORT).show();
 
-                MqttMessage m = new MqttMessage("dankeschön".getBytes());
+                MqttMessage m = new MqttMessage("Error".getBytes());
                 try {
-                    mqttHelperFehlercodes.mqttAndroidClient.publish("bitteFehler", m);
+                    mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }

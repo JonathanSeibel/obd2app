@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -60,7 +59,7 @@ public class AdapterFehlercodesListe extends BaseAdapter implements ListAdapter 
         listItemText.setText(list.get(position));
 
         //Handle buttons and add onClickListeners
-        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
+       /* Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
 
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
@@ -72,7 +71,7 @@ public class AdapterFehlercodesListe extends BaseAdapter implements ListAdapter 
                 notifyDataSetChanged();
             }
         });
-
+    */
         return view;
     }
 }

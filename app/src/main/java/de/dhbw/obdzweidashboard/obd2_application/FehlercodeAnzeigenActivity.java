@@ -126,7 +126,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
                 String gsonString = mqttMessage.toString();
                 Gson gson = new Gson();
-                Fehlerklasse data = gson.fromJson(gsonString, Fehlerklasse.class);
+                ErrorData data = gson.fromJson(gsonString, ErrorData.class);
                 if (data.anzahlFehler == 0) {
                     Toast.makeText(activity, "Keine Fehlercodes vorhanden!!!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -179,7 +179,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class Fehlerklasse {
+    public class ErrorData {
         public int anzahlFehler;
         public String[] fehlerArray;
     }

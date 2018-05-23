@@ -188,7 +188,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         mqttHelperLivedaten.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                Toast.makeText(activity, "Connection to Pi-Livedaten established...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Verbindung zu Pi-Livedaten hergestellt.", Toast.LENGTH_SHORT).show();
                 MqttMessage m = new MqttMessage("Live".getBytes());
                 try {
                     mqttHelperLivedaten.mqttAndroidClient.publish("Control", m);
@@ -199,7 +199,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
 
             @Override
             public void connectionLost(Throwable throwable) {
-                Toast.makeText(activity, "Connection to Pi-Livedaten lost...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Verbindung zu Pi-Livedaten verloren.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -208,9 +208,9 @@ public class LivedatenTabsActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 LiveData data = gson.fromJson(gsonString, LiveData.class);
                 if (data.datavalue.equals("Car not connected")) {
-                    Toast.makeText(activity, "Please connect car...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Bitte Auto verbinden...", Toast.LENGTH_SHORT).show();
                 } else if (data.datavalue.equals("Adapter not connected")) {
-                    Toast.makeText(activity, "Please connect adapter...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Bitte Adapter verbinden...", Toast.LENGTH_SHORT).show();
                 } else {
                     if (data.type.equals("kmh")) ergebnis[0] = data.datavalue;
                     if (data.type.equals("rpm")) ergebnis[1] = data.datavalue;

@@ -37,8 +37,6 @@ public class FehlercodeAnzeigenActivity extends Activity {
 
         //generate list
         list = new ArrayList<String>();
-        list.add("item1");
-        list.add("item2");
 
 
         //instantiate custom adapter
@@ -75,11 +73,17 @@ public class FehlercodeAnzeigenActivity extends Activity {
     private void loeschanfrage() {
         MqttMessage m = new MqttMessage("Delete".getBytes());
         try {
+
             mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
-            Toast.makeText(this, "Alle Fehler werden gelöscht, bitte warten...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Alle Fehler werden gelöscht. Überprüfung durch 'Update'.'", Toast.LENGTH_SHORT).show();
         } catch (MqttException e) {
             e.printStackTrace();
         }
+        int n = 0;
+        while (n < 1000) {
+            n++;
+        }
+        refresh();
     }
 
     private void refresh(){
@@ -88,7 +92,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
         MqttMessage m = new MqttMessage("Error".getBytes());
         try {
             mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
-            Toast.makeText(this, "Fehlerabfrage wurde wahrscheinlich gesendet...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fehlerabfrage wurde gesendet.", Toast.LENGTH_SHORT).show();
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -107,31 +111,40 @@ public class FehlercodeAnzeigenActivity extends Activity {
         mqttHelperFehlercodes.setCallback(new MqttCallbackExtended() {
             @Override
             public void connectComplete(boolean b, String s) {
-                Toast.makeText(activity, "Connection to Pi-Fehlercodes established...", Toast.LENGTH_SHORT).show();
-
                 MqttMessage m = new MqttMessage("Error".getBytes());
                 try {
                     mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
                 } catch (MqttException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(activity, "Verbindung zu Pi-Fehlercodes hergestellt.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void connectionLost(Throwable throwable) {
-                Toast.makeText(activity, "Connection to Pi-Fehlercodes lost...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Verbindung zu Pi-Fehlercodes verloren.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
                 String gsonString = mqttMessage.toString();
-                Gson gson = new Gson();
-                ErrorData data = gson.fromJson(gsonString, ErrorData.class);
-                if (data.anzahlFehler == 0) {
-                    Toast.makeText(activity, "Keine Fehlercodes vorhanden!!!", Toast.LENGTH_SHORT).show();
+
+                if (gsonString.equals("Car not connected")) {
+                    Toast.makeText(activity, "Bitte Auto verbinden...", Toast.LENGTH_SHORT).show();
+                } else if (gsonString.equals("Adapter not connected")) {
+                    Toast.makeText(activity, "Bitte Adapter verbinden...", Toast.LENGTH_SHORT).show();
                 } else {
-                    fehlercodeArray = new String[data.anzahlFehler];
-                    fehlercodeArray = Arrays.copyOf(data.fehlerArray, data.anzahlFehler);
+
+                    Gson gson = new Gson();
+                    ErrorData data = gson.fromJson(gsonString, ErrorData.class);
+
+
+                    if (data.anzahlFehler == 0) {
+                        Toast.makeText(activity, "Keine Fehlercodes vorhanden!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        fehlercodeArray = new String[data.anzahlFehler];
+                        fehlercodeArray = Arrays.copyOf(data.fehlerArray, data.anzahlFehler);
+                    }
                 }
             }
 
@@ -165,11 +178,11 @@ public class FehlercodeAnzeigenActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
+   /* protected void onResume() {
         super.onResume();
         initButtons();
         startMqtt(this);
-    }
+    }*/
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {

@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +26,14 @@
         </activity>
         <activity
             android:name=".FehlercodeAnzeigenActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <!--<activity
+            android:name=".ChartActivity"
+            android:label="@string/title_activity_chart"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />-->
+
         <activity
             android:name=".LivedatenTabsActivity"
             android:label="@string/title_activity_livedaten_tabs"
@@ -41,7 +48,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.dhbw.obdzweidashboard.obd2_application.MainActivity" />
         </activity>
+
         <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <activity
+            android:name=".ChartActivity"
+            android:label="@string/title_activity_chart"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

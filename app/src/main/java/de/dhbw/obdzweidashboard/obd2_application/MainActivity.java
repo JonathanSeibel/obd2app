@@ -25,16 +25,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
         initFehlercodesAnzeigenButton();
         initLivedatenAnzeigenButton();
         initLogoButton();
+        //initChartButton();
     }
-    private void initFehlercodesAnzeigenButton(){
+
+    private void initFehlercodesAnzeigenButton() {
         Button button_fehlercodes_anzeigen = (Button) findViewById(R.id.button_fehlercodes_anzeigen);
-        button_fehlercodes_anzeigen.setOnClickListener(new OnClickListener(){
+        button_fehlercodes_anzeigen.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(), FehlercodeAnzeigenActivity.class));
             }
         });
     }
+
+    /*private void initChartButton(){
+        Button button_chart = (Button) findViewById(R.id.button_chart);
+        button_chart.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), ChartActivity.class));
+            }
+        });
+    }*/
     private void initLivedatenAnzeigenButton(){
         Button button_livedaten_anzeigen = (Button) findViewById(R.id.button_livedaten_anzeigen);
         button_livedaten_anzeigen.setOnClickListener(new OnClickListener(){

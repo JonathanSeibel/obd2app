@@ -55,5 +55,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logoobdzweikleinerinterlaced" />
 
+    <!--<Button
+        android:id="@+id/button_chart"
+        android:layout_width="322dp"
+        android:layout_height="54dp"
+        android:background="@color/colorAccent"
+        android:gravity="center_vertical|center_horizontal"
+        android:hapticFeedbackEnabled="true"
+        android:text="@string/chart"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.921" />-->
+
 
 </android.support.constraint.ConstraintLayout>

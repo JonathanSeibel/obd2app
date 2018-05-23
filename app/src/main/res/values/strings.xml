@@ -38,4 +38,6 @@
     <string name="preference_ladedruck_key">setting_check_ladedruck</string>
     <string name="preference_throttlepos_key">setting_check_throttlepos</string>
     <string name="pref_category_title">Livedaten Anzeigeoptionen</string>
+    <string name="title_activity_chart">ChartActivity</string>
+    <string name="chart">Datenbank</string>
 </resources>

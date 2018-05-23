@@ -27,6 +27,12 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/textViewVIN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

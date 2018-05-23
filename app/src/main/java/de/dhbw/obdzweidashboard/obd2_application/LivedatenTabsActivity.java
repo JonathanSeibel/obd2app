@@ -221,6 +221,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
                     if (data.type.equals("fuelrate")) ergebnis[6] = data.datavalue;
                     if (data.type.equals("ladedruck")) ergebnis[7] = data.datavalue;
                     if (data.type.equals("throttlepos")) ergebnis[8] = data.datavalue;
+                    if (data.type.equals("VIN")) setVIN(data.datavalue);
                 }
 
                 aktualisiere(ergebnis);
@@ -233,6 +234,10 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         });
     }
 
+    void setVIN(String vin) {
+        TextView textVIN = (TextView) findViewById(R.id.textViewVIN);
+        textVIN.setText("VIN: " + vin);
+    }
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();

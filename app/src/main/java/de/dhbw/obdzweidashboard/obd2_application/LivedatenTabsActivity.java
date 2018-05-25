@@ -29,6 +29,7 @@ import java.util.List;
 
 public class LivedatenTabsActivity extends AppCompatActivity {
     private static final String TAG = "LivedatenTabsActivity";
+    SummaryLivedatenActivityFragment summaryLivedatenActivityFragmentObj;
     TabPaceFragment tabPaceFragmentObj;
     TabRPMFragment tabRPMFragmentObj;
     TabOilTempFragment tabOilTempFragmentObj;
@@ -38,12 +39,6 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     TabFuelLevelFragment tabFuelLevelFragmentObj;
     TabThrottlePositionFragment tabThrottlePositionFragmentObj;
     TabDTCCountFragment tabDTCCountFragmentObj;
-    TextView wertText1;
-    TextView wertText2;
-    TextView wertText3;
-    TextView wertText4;
-    TextView wertText5;
-    TextView wertText6;
     MqttHelperLivedaten mqttHelperLivedaten;
     String[] ergebnis = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
     boolean connected = false;
@@ -54,7 +49,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_livedaten_tabs);
-
+        summaryLivedatenActivityFragmentObj = new SummaryLivedatenActivityFragment();
         tabPaceFragmentObj = new TabPaceFragment();
         tabRPMFragmentObj = new TabRPMFragment();
         tabOilTempFragmentObj = new TabOilTempFragment();
@@ -145,7 +140,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         Boolean throttlePos = sPrefs.getBoolean(prefThrottlePosKey, true);
         //
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        adapter.addFragment(summaryLivedatenActivityFragmentObj, "TABSummary");
         if (pace) adapter.addFragment(tabPaceFragmentObj, "TABPace");
         if (rpm) adapter.addFragment(tabRPMFragmentObj, "TABRPM");
         if (oilTemp) adapter.addFragment(tabOilTempFragmentObj, "TABOilTemp");

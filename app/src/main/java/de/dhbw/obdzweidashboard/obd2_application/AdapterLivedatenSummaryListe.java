@@ -57,14 +57,14 @@ public class AdapterLivedatenSummaryListe extends BaseAdapter implements ListAda
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        if (view == null) {
+        //if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.summary_list_element, null);
-        }
+        //}
 
         //Handle TextView and display string from your list
-        TextView listItemTextValue = (TextView) view.findViewById(R.id.list_view_summary_livedaten);
-        TextView listItemTextType = (TextView) view.findViewById(R.id.textViewSummary_list_item);
+        TextView listItemTextValue = (TextView) view.findViewById(R.id.textViewSummary_list_item);
+        TextView listItemTextType = (TextView) view.findViewById(R.id.list_item_string);
 
         listItemTextValue.setText(listValues.get(position));
         listItemTextType.setText(listTypes.get(position));

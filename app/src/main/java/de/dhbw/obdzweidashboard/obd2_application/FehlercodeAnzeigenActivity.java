@@ -72,6 +72,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
 
     private void loeschanfrage() {
         MqttMessage m = new MqttMessage("Delete".getBytes());
+        adapter.deleteAll();
         try {
 
             mqttHelperFehlercodes.mqttAndroidClient.publish("Control", m);
@@ -79,6 +80,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+
         int n = 0;
         while (n < 1000) {
             n++;

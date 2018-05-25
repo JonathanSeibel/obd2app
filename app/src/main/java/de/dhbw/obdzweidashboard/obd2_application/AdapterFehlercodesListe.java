@@ -72,6 +72,13 @@ public class AdapterFehlercodesListe extends BaseAdapter implements ListAdapter 
             }
         });
     */
+
         return view;
+    }
+
+    public void deleteAll() {
+        list.clear();
+        notifyDataSetChanged();
+
     }
 }

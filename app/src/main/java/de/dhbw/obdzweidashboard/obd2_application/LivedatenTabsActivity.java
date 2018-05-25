@@ -145,6 +145,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         Boolean throttlePos = sPrefs.getBoolean(prefThrottlePosKey, true);
         //
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
         if (pace) adapter.addFragment(tabPaceFragmentObj, "TABPace");
         if (rpm) adapter.addFragment(tabRPMFragmentObj, "TABRPM");
         if (oilTemp) adapter.addFragment(tabOilTempFragmentObj, "TABOilTemp");
@@ -156,6 +157,16 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         if (throttlePos) adapter.addFragment(tabThrottlePositionFragmentObj, "TABThrottlePosition");
         viewPager.setAdapter(adapter);
     }
+
+    /*private void initLivedatenSummaryButton(){
+        Button button_livedaten_summary = (Button) findViewById(R.id.button_livedaten_summary);
+        button_livedaten_summary.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), SummaryLivedatenActivity.class));
+            }
+        });
+    }*/
 
 
     @Override

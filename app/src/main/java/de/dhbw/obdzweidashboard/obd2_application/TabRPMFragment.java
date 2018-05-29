@@ -12,16 +12,16 @@ import android.widget.TextView;
  * Created by JZX8NT on 30.04.2018.
  */
 
-public class TabRPMFragment extends Fragment implements werteSetzer{
+public class TabRPMFragment extends Fragment {
     private static final String TAG = "TabRPMFragment";
-    private String speed;
     TextView wertText2;
     boolean viewCreated = false;
+    private String speed;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.livedaten_rpm, container, false);
+        View view = inflater.inflate(R.layout.livedaten_tab_rpm, container, false);
         return view;
     }
 

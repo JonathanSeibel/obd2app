@@ -12,11 +12,11 @@ import android.widget.TextView;
  * Created by JZX8NT on 30.04.2018.
  */
 
-public class TabFuelLevelFragment extends Fragment implements werteSetzer{
+public class TabFuelLevelFragment extends Fragment {
     private static final String TAG = "TabFuelLevelFragment";
-    private String speed;
     TextView wertText4;
     boolean viewCreated = false;
+    private String speed;
 
     @Nullable
     @Override

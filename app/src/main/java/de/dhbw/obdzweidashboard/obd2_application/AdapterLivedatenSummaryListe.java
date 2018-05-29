@@ -1,6 +1,7 @@
 package de.dhbw.obdzweidashboard.obd2_application;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class AdapterLivedatenSummaryListe extends BaseAdapter implements ListAda
         notifyDataSetChanged();
     }
 
+
     @Override
     public int getCount() {
         return listValues.size();
@@ -68,6 +70,12 @@ public class AdapterLivedatenSummaryListe extends BaseAdapter implements ListAda
 
         listItemTextValue.setText(listValues.get(position));
         listItemTextType.setText(listTypes.get(position));
+
+
+
+    /* remainder is unchanged */
+
+        view.setBackgroundColor(position % 2 == 0 ? Color.WHITE : Color.LTGRAY);
 
 
         return view;

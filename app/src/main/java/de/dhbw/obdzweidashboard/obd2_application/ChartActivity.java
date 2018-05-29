@@ -1,3 +1,4 @@
+/*
 package de.dhbw.obdzweidashboard.obd2_application;
 
 
@@ -61,4 +62,4 @@ public class ChartActivity extends Activity {
             resultArea.setText(value);
         }
     }
-}
+}*/

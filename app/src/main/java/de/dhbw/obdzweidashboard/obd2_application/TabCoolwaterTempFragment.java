@@ -12,11 +12,11 @@ import android.widget.TextView;
  * Created by JZX8NT on 30.04.2018.
  */
 
-public class TabCoolwaterTempFragment extends Fragment implements werteSetzer{
+public class TabCoolwaterTempFragment extends Fragment {
     private static final String TAG = "TabCoolwaterTempFragment";
-    private String tempe;
     TextView wertText4;
     boolean viewCreated = false;
+    private String tempe;
 
     @Nullable
     @Override

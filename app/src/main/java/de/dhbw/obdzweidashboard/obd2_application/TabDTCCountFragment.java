@@ -12,11 +12,11 @@ import android.widget.TextView;
  * Created by JZX8NT on 30.04.2018.
  */
 
-public class TabDTCCountFragment extends Fragment implements werteSetzer{
+public class TabDTCCountFragment extends Fragment {
     private static final String TAG = "TabDTCCountFragment";
-    private String speed;
     TextView wertText3;
     boolean viewCreated = false;
+    private String speed;
 
     @Nullable
     @Override

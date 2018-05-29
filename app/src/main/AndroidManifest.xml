@@ -28,13 +28,13 @@
             android:name=".FehlercodeAnzeigenActivity"
             android:screenOrientation="portrait" />
 
-        <!--
-            <activity
-            android:name=".ChartActivity"
+
+        <activity
+            android:name=".SummaryLivedatenActivity"
             android:label="@string/title_activity_chart"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        -->
+
 
         <activity
             android:name=".LivedatenTabsActivity"
@@ -53,11 +53,11 @@
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
-        <activity
-            android:name=".ChartActivity"
-            android:label="@string/title_activity_chart"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SummaryLivedatenActivity"></activity>
+        <!-- <activity
+             android:name=".ChartActivity"
+             android:label="@string/title_activity_chart"
+             android:theme="@style/AppTheme.NoActionBar" />-->
+        <!--<activity android:name=".SummaryLivedatenActivity"></activity>-->
     </application>
 
 </manifest>

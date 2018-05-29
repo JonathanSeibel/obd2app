@@ -3,7 +3,6 @@ package de.dhbw.obdzweidashboard.obd2_application;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -14,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,6 @@ import java.util.List;
 
 public class LivedatenTabsActivity extends AppCompatActivity {
     private static final String TAG = "LivedatenTabsActivity";
-    SummaryLivedatenActivityFragment summaryLivedatenActivityFragmentObj;
     TabPaceFragment tabPaceFragmentObj;
     TabRPMFragment tabRPMFragmentObj;
     TabOilTempFragment tabOilTempFragmentObj;
@@ -40,16 +40,24 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     TabThrottlePositionFragment tabThrottlePositionFragmentObj;
     TabDTCCountFragment tabDTCCountFragmentObj;
     MqttHelperLivedaten mqttHelperLivedaten;
+    boolean pace;
+    boolean rpm;
+    boolean oilTemp;
+    boolean coolwaterTemp;
+    boolean dtcCount;
+    boolean fuelLevel;
+    boolean fuelRate;
+    boolean ladedruck;
+    boolean throttlePos;
     String[] ergebnis = {"N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"};
     boolean connected = false;
     private ViewPager mViewPager;
-    private AsyncTask backgroundThread;
+    //private AsyncTask backgroundThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_livedaten_tabs);
-        summaryLivedatenActivityFragmentObj = new SummaryLivedatenActivityFragment();
         tabPaceFragmentObj = new TabPaceFragment();
         tabRPMFragmentObj = new TabRPMFragment();
         tabOilTempFragmentObj = new TabOilTempFragment();
@@ -70,6 +78,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
 
         aktualisiere(ergebnis);
+        initLivedatenSummaryButton();
         startMqtt(this);
     }
 
@@ -105,42 +114,49 @@ public class LivedatenTabsActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        //startMqtt(this);
+        startMqtt(this);
     }
 
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        startMqtt(this);
+    }*/
+
     private void setupViewPager(ViewPager viewPager) {
-        //Einstellungen abfragen
+        //EEEEEEEEEEEEEEEEIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNSSSSSSSSTTTTTEEEEELLLUUUUUUUUUUUUUUNNNNNNNNNNGGGGGGGGGGGGGEEEEEEEEEENNNNNNNNNNNNNNN
         SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         String prefPaceKey = getString(R.string.preference_pace_key);
-        Boolean pace = sPrefs.getBoolean(prefPaceKey, true);
+        pace = sPrefs.getBoolean(prefPaceKey, true);
 
         String prefRPMKey = getString(R.string.preference_rpm_key);
-        Boolean rpm = sPrefs.getBoolean(prefRPMKey, true);
+        rpm = sPrefs.getBoolean(prefRPMKey, true);
 
         String prefOilTempKey = getString(R.string.preference_oiltemp_key);
-        Boolean oilTemp = sPrefs.getBoolean(prefOilTempKey, true);
+        oilTemp = sPrefs.getBoolean(prefOilTempKey, true);
 
         String prefCoolwaterTempKey = getString(R.string.preference_coolwatertemp_key);
-        Boolean coolwaterTemp = sPrefs.getBoolean(prefCoolwaterTempKey, true);
+        coolwaterTemp = sPrefs.getBoolean(prefCoolwaterTempKey, true);
 
         String prefDTCCountKey = getString(R.string.preference_dtccount_key);
-        Boolean dtcCount = sPrefs.getBoolean(prefDTCCountKey, true);
+        dtcCount = sPrefs.getBoolean(prefDTCCountKey, true);
 
         String prefFuelLevelKey = getString(R.string.preference_fuellevel_key);
-        Boolean fuelLevel = sPrefs.getBoolean(prefFuelLevelKey, true);
+        fuelLevel = sPrefs.getBoolean(prefFuelLevelKey, true);
 
         String prefFuelRateKey = getString(R.string.preference_fuelrate_key);
-        Boolean fuelRate = sPrefs.getBoolean(prefFuelRateKey, true);
+        fuelRate = sPrefs.getBoolean(prefFuelRateKey, true);
 
         String prefLadedruckKey = getString(R.string.preference_ladedruck_key);
-        Boolean ladedruck = sPrefs.getBoolean(prefLadedruckKey, true);
+        ladedruck = sPrefs.getBoolean(prefLadedruckKey, true);
 
         String prefThrottlePosKey = getString(R.string.preference_throttlepos_key);
-        Boolean throttlePos = sPrefs.getBoolean(prefThrottlePosKey, true);
-        //
+        throttlePos = sPrefs.getBoolean(prefThrottlePosKey, true);
+        //EEEEEEEEEEEEEEEEIIIIIIIIIIIIIIIIIINNNNNNNNNNNNNNNNNNNSSSSSSSSTTTTTEEEEELLLUUUUUUUUUUUUUUNNNNNNNNNNGGGGGGGGGGGGGEEEEEEEEEENNNNNNNNNNNNNNN
+        //Einstellungen abfragen
+
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(summaryLivedatenActivityFragmentObj, "TABSummary");
         if (pace) adapter.addFragment(tabPaceFragmentObj, "TABPace");
         if (rpm) adapter.addFragment(tabRPMFragmentObj, "TABRPM");
         if (oilTemp) adapter.addFragment(tabOilTempFragmentObj, "TABOilTemp");
@@ -153,7 +169,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    /*private void initLivedatenSummaryButton(){
+    private void initLivedatenSummaryButton() {
         Button button_livedaten_summary = (Button) findViewById(R.id.button_livedaten_summary);
         button_livedaten_summary.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -161,7 +177,7 @@ public class LivedatenTabsActivity extends AppCompatActivity {
                 startActivity(new Intent(view.getContext(), SummaryLivedatenActivity.class));
             }
         });
-    }*/
+    }
 
 
     @Override

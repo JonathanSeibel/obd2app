@@ -290,10 +290,8 @@ public class LivedatenTabsActivity extends AppCompatActivity {
         }
     }
 
-    public class LiveData {
-
-        public String datavalue;
-        public String type;
-
+    class LiveData {
+        String datavalue;
+        String type;
     }
 }

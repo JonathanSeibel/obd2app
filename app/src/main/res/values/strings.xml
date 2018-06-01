@@ -5,8 +5,8 @@
     <string name="title_activity_livedaten_tabs">LivedatenTabs</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="update">Update</string>
-    <string name="delete_all">Delete All</string>
+    <string name="update">Aktualisieren</string>
+    <string name="delete_all">Alle löschen</string>
     <string name="title_activity_einstellungen">Einstellungen</string>
     <string name="preference_mqtt_ipaddress_default">tcp://10.3.141.1:1883</string>
     <string name="preference_mqtt_ipaddress_key">mqtt_ipaddress</string>

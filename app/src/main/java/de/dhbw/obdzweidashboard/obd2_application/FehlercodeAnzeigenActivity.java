@@ -85,7 +85,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
         while (n < 1000) {
             n++;
         }
-        refresh();
+        //refresh();
     }
 
     private void refresh(){
@@ -99,8 +99,16 @@ public class FehlercodeAnzeigenActivity extends Activity {
             e.printStackTrace();
         }
 
-        while(n < 100){n++;}
+        while (n < 1000) {
+            n++;
+        }
 
+        /*//TESTTESTTESTETETETETEFFFFFEEEEEEHHHHHLLLLLEEEEEERRRRRR
+        fehlercodeArray=new String[92];
+        for (int i = 0; i<fehlercodeArray.length; i++){
+            fehlercodeArray[i]="Beispielhafter Fehler "+i;
+        }
+        //ENDE_TEST*/
         for (int i=0; i<fehlercodeArray.length; i++){
             list.add(fehlercodeArray[i]);
         }
@@ -140,11 +148,17 @@ public class FehlercodeAnzeigenActivity extends Activity {
                     Gson gson = new Gson();
                     ErrorData data = gson.fromJson(gsonString, ErrorData.class);
 
+                    //TEST
+                    //data.anzahlFehler=12;
+                    //ENDETEST
 
                     if (data.anzahlFehler == 0) {
                         Toast.makeText(activity, "Keine Fehlercodes vorhanden!", Toast.LENGTH_SHORT).show();
                     } else {
                         fehlercodeArray = new String[data.anzahlFehler];
+                        //für TEST
+                        //fehlercodeArray = new String[12];
+                        //ENDE TEST
                         fehlercodeArray = Arrays.copyOf(data.fehlerArray, data.anzahlFehler);
                     }
                 }
@@ -195,7 +209,7 @@ public class FehlercodeAnzeigenActivity extends Activity {
     }
 
     public class ErrorData {
-        public int anzahlFehler;
-        public String[] fehlerArray;
+        int anzahlFehler;
+        String[] fehlerArray;
     }
 }

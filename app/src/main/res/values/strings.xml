@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">OBD2</string>
+    <string name="app_name">OBDoc</string>
     <string name="livedaten_anzeigen">Livedaten anzeigen</string>
     <string name="fehlercodes_anzeigen">Fehlercodes anzeigen</string>
-    <string name="title_activity_livedaten_tabs">LivedatenTabs</string>
+    <string name="title_activity_livedaten_tabs">Livedaten</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="update">Aktualisieren</string>

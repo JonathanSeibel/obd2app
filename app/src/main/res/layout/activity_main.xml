@@ -47,11 +47,11 @@
         android:id="@+id/imageButton_logo"
         android:layout_width="323dp"
         android:layout_height="415dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="44dp"
         android:background="@color/colorAccent2"
         app:layout_constraintBottom_toTopOf="@+id/button_livedaten_anzeigen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logoobdzweikleinerinterlaced" />
 

@@ -37,7 +37,7 @@ public class MqttHelperLivedaten {
     String ipadress;
 
     public MqttHelperLivedaten(Context context, SharedPreferences sprefs, Activity activity) {
-        Log.i("ojahaaaaaaaaaaaaaaaaa", clientId);
+        Log.i("a", clientId);
         SharedPreferences sPrefs = sprefs;
         prefIpAddressKey = activity.getString(R.string.preference_mqtt_ipaddress_key);
         prefIpAddressDefault = activity.getString(R.string.preference_mqtt_ipaddress_default);
